@@ -125,16 +125,56 @@ public class LinkedList {
         current.next.data = data;
     }
 
-    private void displayStep(int step) {
-        System.out.println("S" + step + ": " + toString());
+    private ListNode getNodeAt(int position) {
+        ListNode current = head;
+
+        for (int i = 0; i < position; i++) {
+            current = current.next;
+        }
+
+        return current;
+    }
+
+    private void doTripleCut() {
+        ListNode firstPartHead, firstPartTail, secondPartHead, secondPartTail, thirdPartHead, thirdPartTail;
+        int firstJoker, sceondJoker;
+
+        if (searchPosition(27) < searchPosition(28)) {
+            firstJoker = 27;
+            sceondJoker = 28;
+        } else {
+            firstJoker = 28;
+            sceondJoker = 27;
+        }
+
+        firstPartHead = head;
+        firstPartTail = getNodeAt(searchPosition(firstJoker) - 1);
+
+        secondPartHead = getNodeAt(searchPosition(firstJoker));
+        secondPartTail = getNodeAt(searchPosition(sceondJoker));
+
+        thirdPartHead = getNodeAt(searchPosition(sceondJoker) + 1);
+        thirdPartTail = tail;
+
+        firstPartTail.next = null;
+        secondPartTail.next = null;
+        thirdPartTail.next = null;
+
+        head = thirdPartHead;
+        thirdPartTail.next = secondPartHead;
+        secondPartTail.next = firstPartHead;
+        tail = firstPartTail;
     }
 
     public void displayKeyGeneration(int messageLength) {
         moveDownLinkedList(27);
-        displayStep(1);
+        System.out.println("S1: " + toString());
         moveDownLinkedList(28);
         moveDownLinkedList(28);
-        displayStep(2);
+        System.out.println("S2: " + toString());
+        doTripleCut();
+        System.out.println("S3: " + toString());
+
     }
 }
 
