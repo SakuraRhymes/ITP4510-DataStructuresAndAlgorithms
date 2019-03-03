@@ -25,10 +25,13 @@ public class SolitaireEncryption {
             deck.displayEncryption(message_string);
         } else if (option.equals("de")) {
             deck.displayDecryption(message_string);
-        }
+        } else
+            throw new UnknownOptionException();
     }
 
     private static String processMessage(String message) {
+        //Remove non-letters character and converted all letters into upper-case
+
         String result = "";
         for (char c : message.toCharArray()) {
             if (Character.isLetter(c)) {
@@ -39,6 +42,8 @@ public class SolitaireEncryption {
     }
 
     private static LinkedList readDeckFile(String deckFilePath) throws FileNotFoundException {
+        //Convert number in the text file into a linked list
+
         LinkedList deck = new LinkedList();
         Scanner file = new Scanner(new File(deckFilePath));
         while (file.hasNextInt()) {

@@ -4,7 +4,7 @@ public class LinkedList {
     private ListNode head;
     private ListNode tail;
     private int count;
-    private int[] keyStream;
+    private int[] keyStream;    //a list of key value generated
 
     public LinkedList() {
         head = null;
@@ -96,6 +96,8 @@ public class LinkedList {
     }
 
     private int searchPosition(int cardNumber) {
+        //return the position (0 - 27) of a particular card
+
         int position = 0;
         ListNode current = head;
 
@@ -110,6 +112,8 @@ public class LinkedList {
     }
 
     private void moveDownLinkedList(int cardNumber) {
+        //move the particular card down the linked list by one position
+
         int position = searchPosition(cardNumber);
         ListNode current = head;
 
@@ -140,6 +144,8 @@ public class LinkedList {
     }
 
     private void doTripleCut() {
+        //swapping the cards above the first (top) joker with the cards below the second (bottom) joker
+
         ListNode firstPartHead, firstPartTail, secondPartHead, secondPartTail, thirdPartHead, thirdPartTail;
         int firstJoker, secondJoker, firstJokerPosition, secondJokerPosition;
 
@@ -184,6 +190,9 @@ public class LinkedList {
     }
 
     private void doCountCut() {
+        //place a number of cards just before the last card
+        //number determined by the value of that last card
+
         ListNode firstPartHead, firstPartTail, secondPartHead, secondPartTail;
         int cutCount;
 
@@ -205,6 +214,8 @@ public class LinkedList {
     }
 
     private boolean displayKeyValue(int keyCount) {
+        //generate key value and display the process
+
         int keyValue;
 
         if ((int) head.data == 28) {
@@ -224,6 +235,8 @@ public class LinkedList {
     }
 
     private boolean nonDisplayKeyValue(int keyCount) {
+        //generate key value without display
+
         int keyValue;
 
         if ((int) head.data == 28) {
@@ -241,6 +254,8 @@ public class LinkedList {
     }
 
     public void displayKeyGeneration(int messageLength) {
+        //key generation process display
+
         keyStream = new int[messageLength];
         int keyCount = 0;
 
@@ -267,6 +282,8 @@ public class LinkedList {
     }
 
     public void displayEncryption(String message) {
+        //encryption process display
+
         keyStream = new int[message.length()];
         int charCount = 0, ascii, encryptedAscii, keyCount = 0;
         char[] encryptedMessage = new char[message.length()];
@@ -297,6 +314,8 @@ public class LinkedList {
     }
 
     public void displayDecryption(String message) {
+        //decryption process display
+
         keyStream = new int[message.length()];
         int charCount = 0, ascii, decryptedAscii, keyCount = 0;
         char[] decryptedMessage = new char[message.length()];
