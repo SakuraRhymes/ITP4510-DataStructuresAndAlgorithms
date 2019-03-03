@@ -21,10 +21,14 @@ public class SolitaireEncryption {
         }
         if (option.equals("keygen")) {
             deck.displayKeyGeneration(message_string.length());
+        } else if (option.equals("en")) {
+            deck.displayEncryption(message_string);
+        } else if (option.equals("de")) {
+            deck.displayDecryption(message_string);
         }
     }
 
-    public static String processMessage(String message) {
+    private static String processMessage(String message) {
         String result = "";
         for (char c : message.toCharArray()) {
             if (Character.isLetter(c)) {
@@ -34,7 +38,7 @@ public class SolitaireEncryption {
         return result;
     }
 
-    public static LinkedList readDeckFile(String deckFilePath) throws FileNotFoundException {
+    private static LinkedList readDeckFile(String deckFilePath) throws FileNotFoundException {
         LinkedList deck = new LinkedList();
         Scanner file = new Scanner(new File(deckFilePath));
         while (file.hasNextInt()) {
