@@ -4,7 +4,7 @@ public class LinkedList {
     private ListNode head;
     private ListNode tail;
     private int count;
-    private int[] keyStream;    //a list of key value generated
+    private int[] keyStream;    //store the list of key value generated
 
     public LinkedList() {
         head = null;
@@ -112,7 +112,7 @@ public class LinkedList {
     }
 
     private void moveDownLinkedList(int cardNumber) {
-        //move the particular card down the linked list by one position
+        //move a particular card down the linked list by one position
 
         int position = searchPosition(cardNumber);
         ListNode current = head;
@@ -149,6 +149,8 @@ public class LinkedList {
         ListNode firstPartHead, firstPartTail, secondPartHead, secondPartTail, thirdPartHead, thirdPartTail;
         int firstJoker, secondJoker, firstJokerPosition, secondJokerPosition;
 
+
+        //identify the first and second joker by their position
         if (searchPosition(27) < searchPosition(28)) {
             firstJoker = 27;
             secondJoker = 28;
@@ -160,6 +162,8 @@ public class LinkedList {
         firstJokerPosition = searchPosition(firstJoker);
         secondJokerPosition = searchPosition(secondJoker);
 
+
+        //dividing the linked list into 3 parts
         firstPartHead = head;
         firstPartTail = getNodeAt(firstJokerPosition - 1);
 
@@ -173,16 +177,26 @@ public class LinkedList {
         secondPartTail.next = null;
         thirdPartTail.next = null;
 
+
+        //reconnect the three parts into one
+
+        //when none of the joker position is at the top or the bottom
         if (firstJokerPosition != 0 && secondJokerPosition != 27) {
             head = thirdPartHead;
             thirdPartTail.next = secondPartHead;
             secondPartTail.next = firstPartHead;
             tail = firstPartTail;
-        } else if (firstJokerPosition == 0) {
+        }
+        //when the first joker is at the top
+        //there is no first part and no need to swap it
+        if (firstJokerPosition == 0) {
             head = thirdPartHead;
             thirdPartTail.next = secondPartHead;
             tail.next = secondPartTail;
-        } else if (secondJokerPosition == 27) {
+        }
+        //when the second joker is at the bottom
+        //there is no third part and no need to swap it
+        if (secondJokerPosition == 27) {
             head = secondPartHead;
             secondPartTail.next = firstPartHead;
             tail = firstPartTail;
@@ -196,18 +210,24 @@ public class LinkedList {
         ListNode firstPartHead, firstPartTail, secondPartHead, secondPartTail;
         int cutCount;
 
+
+        //if the last card is a joker, nothing need to be swap
         if ((int) tail.data == 27 || (int) tail.data == 28) {
             return;
         }
 
         cutCount = (int) tail.data;
 
+
+        //dividing the linked list into 2 parts
         firstPartHead = head;
         firstPartTail = getNodeAt(cutCount - 1);
 
         secondPartHead = getNodeAt(cutCount);
         secondPartTail = getNodeAt(26);
 
+
+        //reconnect the two parts into one
         head = secondPartHead;
         secondPartTail.next = firstPartHead;
         firstPartTail.next = tail;
@@ -218,17 +238,24 @@ public class LinkedList {
 
         int keyValue;
 
+        //get the value of the top card
+        //set the value to 27 if it is a joker
         if ((int) head.data == 28) {
             keyValue = (int) getNodeAt(27).data;
         } else {
             keyValue = (int) getNodeAt((int) head.data).data;
         }
 
+
+        //joker is not a valid key value
+        //return false and repeat steps 1 - 5
         if (keyValue == 27 || keyValue == 28) {
             System.out.println("Joker: Key skipped");
             return false;
         }
 
+        //store the key value to a list and display it
+        //return true and continue to generate the next key value
         keyStream[keyCount] = keyValue;
         System.out.println("Key " + (keyCount + 1) + ": " + keyValue);
         return true;
@@ -239,16 +266,22 @@ public class LinkedList {
 
         int keyValue;
 
+        //get the value of the top card
+        //set the value to 27 if it is a joker
         if ((int) head.data == 28) {
             keyValue = (int) getNodeAt(27).data;
         } else {
             keyValue = (int) getNodeAt((int) head.data).data;
         }
 
+        //joker is not a valid key value
+        //return false and repeat steps 1 - 5
         if (keyValue == 27 || keyValue == 28) {
             return false;
         }
 
+        //store the key value to a list
+        //return true and continue to generate the next key value
         keyStream[keyCount] = keyValue;
         return true;
     }
@@ -259,6 +292,7 @@ public class LinkedList {
         keyStream = new int[messageLength];
         int keyCount = 0;
 
+        //generate the same digits of key value as the message length
         while (keyCount < messageLength) {
             moveDownLinkedList(27);
             System.out.println("S1: " + toString());
@@ -274,6 +308,8 @@ public class LinkedList {
             }
         }
 
+
+        //display the key values generated
         System.out.print("Keystream value: [");
         for (int num : keyStream) {
             System.out.print(" " + num);
@@ -288,6 +324,7 @@ public class LinkedList {
         int charCount = 0, ascii, encryptedAscii, keyCount = 0;
         char[] encryptedMessage = new char[message.length()];
 
+        //generate the same digits of key value as the message length
         while (keyCount < message.length()) {
             moveDownLinkedList(27);
             moveDownLinkedList(28);
@@ -299,6 +336,8 @@ public class LinkedList {
             }
         }
 
+
+        //display encryption process
         for (char c : message.toCharArray()) {
             ascii = (int) c;
             encryptedAscii = (ascii - 64 + keyStream[charCount]) % 26;
@@ -320,6 +359,8 @@ public class LinkedList {
         int charCount = 0, ascii, decryptedAscii, keyCount = 0;
         char[] decryptedMessage = new char[message.length()];
 
+
+        //generate the same digits of key value as the message length
         while (keyCount < message.length()) {
             moveDownLinkedList(27);
             moveDownLinkedList(28);
@@ -331,6 +372,7 @@ public class LinkedList {
             }
         }
 
+        //display decryption process
         for (char c : message.toCharArray()) {
             ascii = (int) c;
             decryptedAscii = (ascii - 64 - keyStream[charCount] + 26) % 26;
