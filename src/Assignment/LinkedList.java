@@ -173,30 +173,39 @@ public class LinkedList {
         thirdPartHead = getNodeAt(secondJokerPosition + 1);
         thirdPartTail = tail;
 
-        firstPartTail.next = null;
-        secondPartTail.next = null;
-        thirdPartTail.next = null;
-
 
         //reconnect the three parts into one
 
         //when none of the joker position is at the top or the bottom
         if (firstJokerPosition != 0 && secondJokerPosition != 27) {
+
+            firstPartTail.next = null;
+            secondPartTail.next = null;
+            thirdPartTail.next = null;
+
             head = thirdPartHead;
             thirdPartTail.next = secondPartHead;
             secondPartTail.next = firstPartHead;
             tail = firstPartTail;
         }
+
         //when the first joker is at the top
         //there is no first part and no need to swap it
         if (firstJokerPosition == 0) {
+
+            secondPartTail.next = null;
+
             head = thirdPartHead;
             thirdPartTail.next = secondPartHead;
-            tail.next = secondPartTail;
+            tail = secondPartTail;
         }
+
         //when the second joker is at the bottom
         //there is no third part and no need to swap it
         if (secondJokerPosition == 27) {
+
+            firstPartTail.next = null;
+
             head = secondPartHead;
             secondPartTail.next = firstPartHead;
             tail = firstPartTail;
