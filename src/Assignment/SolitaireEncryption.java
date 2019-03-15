@@ -16,7 +16,7 @@ public class SolitaireEncryption {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Usage: java SolitaireEncryption [option] [deck_file] [message_string]");
             System.exit(1);
-        } catch (FileNotFoundException | WrongCardNumberException | WrongDeckCardNumbersException | DuplicateCardException e) {
+        } catch (FileNotFoundException | WrongCardNumberException | WrongDeckLengthException | DuplicateCardException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
@@ -70,7 +70,7 @@ public class SolitaireEncryption {
         Scanner file = new Scanner(new File(deckFilePath));
         while (file.hasNextInt()) {
             if (cardCount >= 28) {
-                throw new WrongDeckCardNumbersException();
+                throw new WrongDeckLengthException();
             }
             deck[cardCount] = file.nextInt();
 
@@ -81,7 +81,7 @@ public class SolitaireEncryption {
         }
 
         if (cardCount < 28)
-            throw new WrongDeckCardNumbersException();
+            throw new WrongDeckLengthException();
 
         Arrays.sort(deck);
 
