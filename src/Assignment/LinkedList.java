@@ -173,25 +173,17 @@ public class LinkedList {
         thirdPartHead = getNodeAt(secondJokerPosition + 1);
         thirdPartTail = tail;
 
-
         //reconnect the three parts into one
 
-        //when none of the joker position is at the top or the bottom
-        if (firstJokerPosition != 0 && secondJokerPosition != 27) {
-
-            firstPartTail.next = null;
-            secondPartTail.next = null;
-            thirdPartTail.next = null;
-
-            head = thirdPartHead;
-            thirdPartTail.next = secondPartHead;
-            secondPartTail.next = firstPartHead;
-            tail = firstPartTail;
+        //if the two joker is localed at the top and bottom of the deck
+        //nothing happen
+        if (firstJokerPosition == 0 && secondJoker == 27) {
+            return;
         }
 
         //when the first joker is at the top
         //there is no first part and no need to swap it
-        if (firstJokerPosition == 0) {
+        else if (firstJokerPosition == 0) {
 
             secondPartTail.next = null;
 
@@ -202,11 +194,24 @@ public class LinkedList {
 
         //when the second joker is at the bottom
         //there is no third part and no need to swap it
-        if (secondJokerPosition == 27) {
+        else if (secondJokerPosition == 27) {
 
             firstPartTail.next = null;
 
             head = secondPartHead;
+            secondPartTail.next = firstPartHead;
+            tail = firstPartTail;
+        }
+
+        //when none of the joker position is at the top or the bottom
+        else {
+
+            firstPartTail.next = null;
+            secondPartTail.next = null;
+            thirdPartTail.next = null;
+
+            head = thirdPartHead;
+            thirdPartTail.next = secondPartHead;
             secondPartTail.next = firstPartHead;
             tail = firstPartTail;
         }
@@ -350,6 +355,8 @@ public class LinkedList {
         for (char c : message.toCharArray()) {
             ascii = (int) c;
             encryptedAscii = (ascii - 64 + keyStream[charCount]) % 26;
+            if (encryptedAscii == 0)
+                encryptedAscii = 26;
             encryptedMessage[charCount] = (char) (encryptedAscii + 64);
             System.out.println(c + "\t" + (ascii - 64) + "\t" + keyStream[charCount] + "\t" + encryptedAscii + "\t" + encryptedMessage[charCount]);
             charCount++;
@@ -385,6 +392,8 @@ public class LinkedList {
         for (char c : message.toCharArray()) {
             ascii = (int) c;
             decryptedAscii = (ascii - 64 - keyStream[charCount] + 26) % 26;
+            if (decryptedAscii == 0)
+                decryptedAscii = 26;
             decryptedMessage[charCount] = (char) (decryptedAscii + 64);
             System.out.println(c + "\t" + (ascii - 64) + "\t" + keyStream[charCount] + "\t" + decryptedAscii + "\t" + decryptedMessage[charCount]);
             charCount++;
