@@ -63,6 +63,8 @@ public class SolitaireEncryption {
     }
 
     private static void checkDeckFile(String deckFilePath) throws FileNotFoundException {
+        //check if the deck contain invalid card number, duplicate card or wrong deck length
+
         int[] deck = new int[28];
         int cardCount = 0;
 
@@ -82,6 +84,8 @@ public class SolitaireEncryption {
         if (cardCount < 28)
             throw new WrongDeckLengthException();
 
+
+        //check if the deck contain duplicate card
         Arrays.sort(deck);
 
         for (int i = 0; i < 28; i++) {
