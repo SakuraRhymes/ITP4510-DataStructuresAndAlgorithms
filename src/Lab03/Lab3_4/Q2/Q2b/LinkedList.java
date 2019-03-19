@@ -1,19 +1,26 @@
-package LinkedListDemo;
+package Lab03.Lab3_4.Q2.Q2b;
 
 public class LinkedList {
     private ListNode head;
     private ListNode tail;
+    private int count;
 
     public LinkedList() {
         head = null;
         tail = null;
+        count = 0;
     }
 
     public boolean isEmpty() {
         return (head == null);
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public void addToHead(Object item) {
+        count++;
         if (isEmpty()) {
             head = tail = new ListNode(item);
         } else {
@@ -22,6 +29,7 @@ public class LinkedList {
     }
 
     public void addToTail(Object item) {
+        count++;
         if (isEmpty()) {
             head = tail = new ListNode(item);
         } else {
@@ -31,12 +39,12 @@ public class LinkedList {
     }
 
     public Object removeFromHead() throws EmptyListException {
-        Object item = null;
         if (isEmpty()) {
             throw new EmptyListException();
         }
-        item = head.data;
-        if (head == tail)      // there's only one single node
+        count--;
+        Object item = head.data;
+        if (head == tail) // there's only one single node
             head = tail = null;
         else
             head = head.next;
@@ -47,14 +55,17 @@ public class LinkedList {
         if (isEmpty()) {
             throw new EmptyListException();
         }
+        count--;
         Object item = tail.data;
         if (head == tail) {   // there is only one node
             head = tail = null;
             return item;
         }
+        // search for the second last node
         ListNode current = head;
         while (current.next != tail)
             current = current.next;
+        // set second last node as new tail
         tail = current;
         tail.next = null;
         return item;
@@ -62,6 +73,8 @@ public class LinkedList {
 
     public String toString() {
         String s = "[ ";
+
+        // traverse the list from head towards tail
         ListNode current = head;
         while (current != null) {
             s += current.data + " ";
@@ -69,5 +82,20 @@ public class LinkedList {
         }
         return s + "]";
     }
+
+    public String search(String item) {
+        ListNode current = head;
+        while (current != null) {
+            if (((String) current.data).equals(item))
+                return (String) current.data;
+            else
+                current = current.next;
+        }
+        return null;
+    }
 }
+
+
+
+
 
