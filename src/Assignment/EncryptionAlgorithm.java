@@ -22,18 +22,23 @@ public class EncryptionAlgorithm {
             System.exit(1);
         }
 
-        switch (option) {
-            case "keygen":
-                deck.displayKeyGeneration(message.length());
-                break;
-            case "en":
-                deck.displayEncryption(message);
-                break;
-            case "de":
-                deck.displayDecryption(message);
-                break;
-            default:
-                throw new UnknownOptionException();
+        try {
+            switch (option) {
+                case "keygen":
+                    deck.displayKeyGeneration(message.length());
+                    break;
+                case "en":
+                    deck.displayEncryption(message);
+                    break;
+                case "de":
+                    deck.displayDecryption(message);
+                    break;
+                default:
+                    throw new UnknownOptionException();
+            }
+        } catch (UnknownOptionException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
     }
 
